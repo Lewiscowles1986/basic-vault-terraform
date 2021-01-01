@@ -96,3 +96,4 @@ runcmd:
 - export VAULT_ADDR=https://${full_domain_name}
 - echo "export VAULT_ADDR=https://${full_domain_name}" | tee -a /etc/profile
 - vault operator init -key-shares=3 -key-threshold=2 > /etc/vault-init
+- chmod 770 /etc/vault-init
