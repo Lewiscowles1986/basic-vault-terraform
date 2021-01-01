@@ -55,7 +55,7 @@ write_files:
         tls_disable = 0
         tls_cert_file = "/etc/letsencrypt/live/${full_domain_name}/fullchain.pem"
         tls_key_file = "/etc/letsencrypt/live/${full_domain_name}/privkey.pem"
-        address = "0.0.0.0:443"
+        address = "[::]:443"
     }
 
   path: /etc/vault.hcl
@@ -81,6 +81,7 @@ runcmd:
 - chown vault:vault /usr/local/bin/vault
 - setcap cap_net_bind_service,cap_ipc_lock=+ep /usr/local/bin/vault
 - /sbin/sysctl -w net.ipv4.conf.all.forwarding=1
+- /sbin/sysctl -w net.ipv6.conf.all.forwarding=1
 - install -o vault -g vault -m 750 -d /var/lib/vault
 - echo 127.0.0.1 ${full_domain_name} | tee -a /etc/hosts
 - systemctl daemon-reload
